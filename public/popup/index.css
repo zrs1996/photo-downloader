@@ -1,0 +1,19 @@
+#open_page {
+  width: max-content;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+#open_page:hover {
+  color: skyblue;
+}
+
+#download_current_page {
+  width: max-content;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+#download_current_page:hover {
+  color: skyblue;
+}
