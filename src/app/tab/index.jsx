@@ -12,7 +12,7 @@ const Tab = (props) => {
 
   const renderTab = () => {
     return config.map((item, index) => {
-      return <div className='tab_li'>
+      return <div key={`tab_key_${index}_${item.id}`} className='tab_li'>
         <div className='tab_name btn' onClick={() => changeTabId(item)}>{item.tabName}</div>
       </div>
     })

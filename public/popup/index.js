@@ -6,16 +6,6 @@ let targetTab = null;
 let allTabs = null;
 
 
-// // 读取数据，第一个参数是指定要读取的key以及设置默认值
-// chrome.storage.sync.get({color: 'red', age: 18}, function(items) {
-// 	console.log(items.color, items.age);
-// });
-// // 保存数据
-// chrome.storage.sync.set({color: 'blue'}, function() {
-// 	console.log('保存成功！');
-// });
-
-
 /* 打开 展示下载图片的UI界面 */
 open_page.onclick = function () {
   const sendInfo = {
@@ -90,6 +80,8 @@ function getAllTab() {
 }
 
 function checkout(data, req) {
+  console.log('data', data);
+  console.log('req', req);
   const type = Object.prototype.toString.call(data);
   let res = null;
   switch (type) {

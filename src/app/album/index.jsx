@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Watcher from 'src/app/js/watch.js';
 import { checkoutImgs } from "/src/app/js/checkoutImgs.js";
-import Header from 'src/app/header';
 import Tab from 'src/app/tab';
 import Gallery from 'src/app/album/gallery.jsx';
 import Preview from 'src/app/album/preview.jsx';
@@ -9,10 +8,15 @@ import './index.less';
 
 const Album = () => {
   const [_data, set_data] = useState([]);
+  const [_title, set_title] = useState('');
   const [_imgList, set_imgList] = useState([{ src: "https://rokuhentai.com/_images/pages/d3qx52/22.jpg" }]);
-
-  Watcher.on(set_data);
-
+  
+  const callback = (req) => {
+    set_data(req.imgsList);
+    set_title(req.title);
+  }
+  Watcher.on(callback);
+  
   const getImg = (list) => {
     const res = [];
     return list;
@@ -27,10 +31,10 @@ const Album = () => {
           saveAs: false,
           conflictAction: "uniquify"
         }, (res) => {
-          console.log(res);
+          console.log('开始下载', res);
         })
       } else {
-        console.log('item.src no exist', item);
+        console.warn('item.src no exist', item);
       }
     })
     console.log('下载到本地');
@@ -46,20 +50,23 @@ const Album = () => {
 
   useEffect(() => {
     const cacheDatatest = window.localStorage.getItem("imgsList")
-    chrome.storage.sync.get({ imgsList: "[]" }, function (res) {
-      if (res.imgsList) {
-        console.log('imgsList', res.imgsList);
-        const list = JSON.parse(res.imgsList);
-        console.log('list', list);
-        list.length > 0 && set_data(list);
-      }
-    });
+    if (chrome?.storage) {
+      chrome.storage.sync.get({ imgsList: "[]" }, function (res) {
+        if (res.imgsList) {
+          console.log('imgsList', res.imgsList);
+          const list = JSON.parse(res.imgsList);
+          list.length > 0 && set_data(list);
+        }
+      });
+    }
     console.log('cacheDatatest', cacheDatatest);
   }, []);
 
   useEffect(() => {
-    console.log('_data', _data);
-    set_imgList(checkoutImgs(_data, { condition: {}}));
+    const _list = checkoutImgs(_data, { condition: {}});
+    _list.length > 0 && set_imgList(_list);
+    console.log('checkoutImgs', _list);
+    console.log('useEffect_data', _data);
   }, [JSON.stringify(_data)]);
 
   const config = [
@@ -69,6 +76,7 @@ const Album = () => {
   ]
 
   return <div>
+    <div className='title'>{`page： ${_title}`}</div>
     <Tab config={config} defaultId={3}/>
   </div>
 }

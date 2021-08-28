@@ -1,6 +1,6 @@
 const reciver = chrome.runtime.onMessage;
 const sendMessage = chrome.extension.sendMessage;
-
+console.log('injdect');
 reciver.addListener(function (req, sender, back) {
   console.log("inject reciver", req);
   onRequest(req, sender, back);
@@ -29,7 +29,7 @@ function onRequest(req) {
       chrome.storage.sync.set({imgsList: JSON.stringify(imgsList)}, function() {
         console.log('保存成功！');
       });
-      sendMessage({ type: "RETURN_PAGE", imgsList: imgsList });
+      sendMessage({ type: "RETURN_PAGE", imgsList: imgsList, title: document.title });
       break;
     default:
       break;

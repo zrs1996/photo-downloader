@@ -1,10 +1,9 @@
-import { setCrossDomain, setHeaders } from "src/app/js/download.js";
 const Watcher = {};
 function onRequest(e, callback) {
   switch (e.type) {
     case "RETURN_PAGE":
       console.log("Album case RETURN_PAGE");
-      callback(e.imgsList);
+      callback(e);
       break;
     default:
       break;
@@ -12,12 +11,14 @@ function onRequest(e, callback) {
 }
 
 function on(callback) {
-  const sendMessage = chrome.runtime.sendMessage;
-  const onMessage = chrome.extension.onMessage;
-  onMessage.addListener(function (req, sender, back) {
-    console.log('req', req);
-    onRequest(req, callback);
-  });
+  if (chrome?.runtime && chrome?.extension) {
+    const sendMessage = chrome.runtime.sendMessage;
+    const onMessage = chrome.extension.onMessage;
+    onMessage.addListener(function (req, sender, back) {
+      console.log('req', req);
+      onRequest(req, callback);
+    });
+  }
 }
 
 Watcher.on = on;

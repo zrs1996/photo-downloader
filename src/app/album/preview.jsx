@@ -8,7 +8,7 @@ const Preview = (props) => {
     console.log('preview data', data);
     if (!data?.length) return <div>no img</div>
     return data.map((item, index) => {
-      return <div className="img_li" id={'img_li_id' + index}>
+      return <div className="img_li" key={'img_li_id' + index}>
         <img src={item.src} alt="" />
       </div>
     })
