@@ -1,11 +1,49 @@
 body{
-  background-color: #333333;
+  margin: 0;
+  padding: 0;
+  background-color: #333;
+}
+.album {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  .menu {
+    flex: 1;
+    overflow: auto;
+  }
 }
 .title {
   color: darksalmon;
   font-size: 24px;
   padding: 10px;
-  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+.topbar {
+  height: 100px;
+}
+.sidebar {
+  height: calc(100% - 100px);
+  .Tab {
+    display: flex;
+    height: 100%;
+  }
+  .tab_ul {
+    overflow-y: auto;
+    max-width: 308px;
+    .tab_name {
+      color: #fff;
+      width: 100%;
+      background: #333;
+      margin: 0;
+      &:hover {
+        background: #555;
+      }
+    }
+  }
+  .tab_component {
+    flex: 1;
+    overflow: auto;
+  }
 }
 .preview {
   .img_ul {

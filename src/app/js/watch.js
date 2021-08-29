@@ -12,7 +12,7 @@ function onRequest(e, callback) {
 
 function on(callback) {
   if (chrome?.runtime && chrome?.extension) {
-    const sendMessage = chrome.runtime.sendMessage;
+    // const sendMessage = chrome.runtime.sendMessage;
     const onMessage = chrome.extension.onMessage;
     onMessage.addListener(function (req, sender, back) {
       console.log('req', req);
